@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-074be47313f84fa38
+      Tags:
+        - Key: BucketName
+          Value: !ImportValue MyBucketName
+      SubnetId: subnet-092cfaa958797419d

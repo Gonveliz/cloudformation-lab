@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  EnvironmentName:
+    Description: "Environment Name"
+    Type: String
+    Default: dev
+    
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "my-sample-bucket-${EnvironmentName}-${AWS::Region}-${AWS::AccountId}"
+      Tags:
+        - Key: "env"
+          Value: !Sub "${EnvironmentName}"
+      VersioningConfiguration:
+        Status: "Enabled"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+Outputs:
+  BucketName:
+    Description: "The name of the S3 bucket"
+    Value: !Ref MyBucket
+    Export:
+      Name: MyBucketName

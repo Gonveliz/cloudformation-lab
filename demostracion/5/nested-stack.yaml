@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Nested stack that creates an S3 bucket and an EC2 instance
+
+Parameters:
+  Parameter1:
+    Type: String
+    Description: Description for Parameter1
+  Parameter2:
+    Type: String
+    Description: Description for Parameter2
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref Parameter1
+
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro

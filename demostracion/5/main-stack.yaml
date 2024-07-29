@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Main stack that includes a nested stack
+
+Resources:
+  MyNestedStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: <https://path-to-your-s3-bucket/nested-stack.yaml>
+      Parameters:
+        Parameter1: Value1
+        Parameter2: Value2
