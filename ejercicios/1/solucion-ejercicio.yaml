@@ -3,4 +3,4 @@ Resources:
   MyBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: my-sample-bucket
+      BucketName: !Sub "my-sample-bucket-${AWS::Region}-${AWS::AccountId}"

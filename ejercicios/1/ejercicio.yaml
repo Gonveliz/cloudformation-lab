@@ -1,0 +1,9 @@
+# Consigna: Necesitamos una plantilla de CloudFormation que nos despliegue un Bucket de S3, esta misma es un primer acercamiento.
+# La idea seria que la plantilla pueda crear un bucket que tenga en su nombre la region y el account ID de la cuenta de AWS desde donde lo estemos desplegando. 
+# De esta manera no se pisaria el bucket si utilizaramos la misma plantilla desde otra cuenta de AWS
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-sample-bucket
