@@ -1,0 +1,29 @@
+# Consigna: Necesitamos una plantilla de CloudFormation que nos despliegue un Bucket de S3, ademas este bucket tiene que tener versionamiento y recibir el nombre por parametro su nombre
+# Tambien en el mismo stack que se tiene que desplegar un Rol, que tenga acceso al bucket y que este rol reciba su nombre como parametro, y esto se aplique a su policy, para que pueda acceder al bucket.
+# Este rol creado solamente tiene que poderse asumir por una Instancia EC2
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters: 
+####
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-sample-bucket
+  IAMRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'codebuild.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+          MaxSessionDuration: 3600
+          ManagedPolicyArns: 
+            - "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess"
+          Description: ""

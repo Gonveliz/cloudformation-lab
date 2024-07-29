@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Template para crear un rol IAM y un bucket S3, donde el rol tiene permisos de acceso al bucket desde una instancia EC2'
+
+Parameters:
+  BucketName:
+    Description: 'Nombre del bucket S3'
+    Type: String
+  RoleName:
+    Description: 'Nombre del rol IAM'
+    Type: String
+
+Resources:
+  MyS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref BucketName
+
+  IAMRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Ref RoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'ec2.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'S3AccessPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 's3:ListBucket'
+                  - 's3:GetObject'
+                Resource:
+                  - !Sub 'arn:aws:s3:::${BucketName}'
+                  - !Sub 'arn:aws:s3:::${BucketName}/*'
+
+Outputs:
+  BucketNameOutput:
+    Description: 'Nombre del bucket S3 creado'
+    Value: !Ref MyS3Bucket
+
+  RoleNameOutput:
+    Description: 'Nombre del rol IAM creado'
+    Value: !Ref IAMRole

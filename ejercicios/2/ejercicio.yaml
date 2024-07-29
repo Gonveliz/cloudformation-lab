@@ -1,0 +1,37 @@
+# Consigna: Necesitamos crear roles, que tengan accesos de lectura a todos los buckets de S3 de la cuenta. 
+# Estos roles, deben contener en su nombre el enviroment al que pertenecen (dev,qa,prod) y el ID de la cuenta. 
+# Estos nombres de environments los tiene que recibir como parametro, desde un archivo json
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template que despliega un rol que puede ser asumido desde una instancia EC2, con acceso de lectura a todo S3
+
+Parameters:
+###
+
+Resources:
+  EC2InstanceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: "bucket-ec2"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'EC2InstancePolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ec2:Describe*'
+                Resource: '*'
+
+Outputs:
+  RoleName:
+    Description: El nombre del rol creado
+    Value: !Ref EC2InstanceRole

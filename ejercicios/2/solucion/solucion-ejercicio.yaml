@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Template que despliega un rol que puede ser asumido desde una instancia EC2, con acceso de lectura a todo S3
+
+Parameters:
+  Environment:
+    Type: String
+    Description: Nombre del ambiente
+  SubnetIds:
+    Type: String
+    Description: Lista de IDs de subnets
+
+Resources:
+  EC2InstanceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub "bucket-ec2-${Environment}-${AWS::AccountId}"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'EC2InstancePolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ec2:Describe*'
+                  - 's3:ListBucket'
+                  - 's3:GetObject'
+                Resource: '*'
+
+Outputs:
+  RoleName:
+    Description: El nombre del rol creado
+    Value: !Ref EC2InstanceRole
