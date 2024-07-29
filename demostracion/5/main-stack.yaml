@@ -5,7 +5,7 @@ Resources:
   MyNestedStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://github.com/Gonveliz/cloudformation-lab/blob/main/demostracion/5/nested-stack.yaml
+      TemplateURL: https://cloudformation-nested-stacks-792019447953.s3.us-west-2.amazonaws.com/nested-stack.yaml
       Parameters:
         Parameter1: !Sub "my-sample-bucket-${AWS::Region}-${AWS::AccountId}"
         Parameter2: subnet-092cfaa958797419d

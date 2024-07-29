@@ -4,13 +4,13 @@ Description: Nested stack that creates an S3 bucket and an EC2 instance
 Parameters:
   Parameter1:
     Type: String
-    Description: Description for Parameter1
+    Description: "Bucket Name"
   Parameter2:
     Type: String
-    Description: Description for Parameter2
+    Description: "Subnet ID"
   Parameter3:
     Type: String
-    Description: Description for Parameter3
+    Description: "ami"
 
 Resources:
   MyS3Bucket:

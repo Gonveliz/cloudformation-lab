@@ -3,7 +3,7 @@ Parameters:
   EnvironmentName:
     Description: "Environment Name"
     Type: String
-    Default: dev
+    Default: prod
 Resources:
   MyBucket:
     Type: AWS::S3::Bucket
@@ -13,7 +13,8 @@ Resources:
         - Key: "env"
           Value: !Sub "${EnvironmentName}"
       VersioningConfiguration:
-        Status: "Enabled"
+        # Status: "Enabled"
+        Status: "Suspended"
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
