@@ -13,10 +13,10 @@ Resources:
       BucketName: !Sub "my-sample-bucket-${EnvironmentName}-${AWS::Region}-${AWS::AccountId}"
       Tags:
         - Key: "env"
-          Value: !Sub "${EnvironmentName}"
+          Value: !Ref EnvironmentName
       VersioningConfiguration:
-        Status: "Enabled"
-        # Status: "Suspended"
+        # Status: "Enabled"
+        Status: "Suspended"
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
